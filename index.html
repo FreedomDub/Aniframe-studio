@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniframe | Студия дубляжа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #333 0%, #222 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            border: 1px solid #444;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.8em;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #bbb;
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .section {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: #fff;
+            border-bottom: 3px solid #555;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-size: 1.9em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: "▸";
+            color: #888;
+        }
+
+        /* Работы */
+        #works-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .work-item {
+            background: linear-gradient(135deg, #444 0%, #3a3a3a 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #666;
+            transition: all 0.3s ease;
+            border: 1px solid #555;
+        }
+
+        .work-item:hover {
+            border-left-color: #888;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .work-item h3 {
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .work-item p {
+            color: #bbb;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 550px;
+            margin-top: 25px;
+            background: #444;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #555;
+        }
+
+        input, button, select {
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        input {
+            background: #555;
+            color: #fff;
+            border: 1px solid #666;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #888;
+            box-shadow: 0 0 0 2px rgba(136,136,136,0.3);
+        }
+
+        input::file-selector-button {
+            background: linear-gradient(135deg, #666 0%, #555 100%);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        input::file-selector-button:hover {
+            background: linear-gradient(135deg, #777 0%, #666 100%);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #555 0%, #444 100%);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #666;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #666 0%, #555 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+            color: white;
+            border: none;
+        }
+
+        .btn-admin:hover {
+            background: linear-gradient(135deg, #f50057 0%, #d81b60 100%);
+        }
+
+        .admin-controls {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #555;
+            display: none;
+        }
+
+        /* Работники */
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .group {
+            background: linear-gradient(135deg, #444 0%, #3a3a3a 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #555;
+            transition: transform 0.3s ease;
+        }
+
+        .group:hover {
+            transform: translateY(-3px);
+        }
+
+        .group h3 {
+            color: #fff;
+            margin-bottom: 18px;
+            font-size: 1.4em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #555;
+        }
+
+        .worker-list {
+            list-style: none;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .worker-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .worker-list::-webkit-scrollbar-track {
+            background: #555;
+            border-radius: 4px;
+        }
+
+        .worker-list::-webkit-scrollbar-thumb {
+            background: #777;
+            border-radius: 4px;
+        }
+
+        .worker-list li {
+            padding: 12px;
+            background: #555;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #888;
+            transition: all 0.3s ease;
+            border: 1px solid #666;
+        }
+
+        .worker-list li:hover {
+            background: #5a5a5a;
+            border-left-color: #aaa;
+            transform: translateX(5px);
+        }
+
+        /* Чат-бот */
+        .chat-bot {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+            border: 1px solid #555;
+        }
+
+        .bot-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .bot-btn {
+            flex: 1;
+            min-width: 280px;
+            padding: 22px;
+            font-size: 1.25em;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .bot-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, #4a6fa5 0%, #3a5a8a 100%);
+        }
+
+        .btn-apply:hover {
+            background: linear-gradient(135deg, #5a7fb5 0%, #4a6a9a 100%);
+        }
+
+        .btn-donate {
+            background: linear-gradient(135deg, #5d8c5d 0%, #4d7c4d 100%);
+        }
+
+        .btn-donate:hover {
+            background: linear-gradient(135deg, #6d9c6d 0%, #5d8c5d 100%);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            padding: 35px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #555;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s ease;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        /* Логин */
+        .login-form {
+            max-width: 450px;
+            margin: 60px auto;
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid #555;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .login-form h2 {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #888;
+            margin-top: 50px;
+            border-top: 2px solid #444;
+            font-size: 0.9em;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #333 0%, #222 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 5px solid #4CAF50;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+            border: 1px solid #444;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .bot-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .bot-btn {
+                min-width: 100%;
+                padding: 18px;
+            }
+            
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+            
+            #works-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .modal-content {
+                padding: 25px 20px;
+            }
+        }
+
+        /* Дополнительные стили для карты */
+        .card-info {
+            background: #444;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #555;
+            text-align: center;
+        }
+
+        .card-number {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4em;
+            letter-spacing: 2px;
+            background: #333;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border: 1px solid #555;
+            color: #fff;
+        }
+
+        .copy-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #777;
+        }
+
+        /* Статус онлайн */
+        .online-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Лоадер */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #555;
+            border-top: 3px solid #888;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Aniframe Studio</h1>
+            <div class="subtitle">Профессиональная студия дубляжа и озвучки</div>
+            <button onclick="toggleAdmin()" class="btn btn-admin" style="margin: 0 auto; display: block; padding: 12px 30px; font-size: 1.1em;">
+                🔐 Вход для администратора
+            </button>
+            <div style="text-align: center; margin-top: 15px;">
+                <span class="online-dot"></span>
+                <span style="color: #4CAF50; font-size: 0.9em;">Студия онлайн</span>
+            </div>
+        </header>
+
+        <!-- Форма входа -->
+        <div id="loginForm" class="login-form hidden">
+            <h2>🔐 Административный доступ</h2>
+            <input type="text" id="adminLogin" placeholder="Введите логин" style="margin-bottom: 20px;">
+            <input type="password" id="adminPassword" placeholder="Введите пароль" style="margin-bottom: 20px;">
+            <button onclick="adminLogin()" class="btn btn-admin" style="width: 100%; padding: 14px;">
+                <span id="loginText">Войти</span>
+                <span id="loginLoader" class="loader hidden" style="vertical-align: middle; margin-left: 10px;"></span>
+            </button>
+        </div>
+
+        <!-- Список работ -->
+        <section class="section">
+            <h2>📁 Работы студии</h2>
+            <div id="works-list">
+                <!-- Работы загружаются через JS -->
+            </div>
+
+            <form class="upload-form" onsubmit="uploadWork(event)">
+                <input type="text" id="workTitle" placeholder="Название проекта" required>
+                <input type="file" id="workFile" accept="video/*,audio/*,.mp4,.avi,.mov,.mkv,.mp3,.wav" required>
+                <button type="submit" class="btn" style="padding: 14px;">
+                    <span id="uploadText">📤 Загрузить работу</span>
+                    <span id="uploadLoader" class="loader hidden" style="vertical-align: middle; margin-left: 10px;"></span>
+                </button>
+            </form>
+
+            <div id="adminControls" class="admin-controls">
+                <h3 style="color: #e91e63;">⚙️ Панель администратора</h3>
+                <p style="color: #bbb; margin-bottom: 15px;">Управление загруженными работами</p>
+                <div id="admin-works-list"></div>
+            </div>
+        </section>
+
+        <!-- Список работников -->
+        <section class="section">
+            <h2>👥 Наша команда</h2>
+            <div class="groups-container">
+                <!-- Группы заполняются через JS -->
+            </div>
+        </section>
+
+        <!-- Чат-бот -->
+        <section class="section chat-bot">
+            <h2>💬 Помощник студии</h2>
+            <p style="color: #bbb; font-size: 1.1em; max-width: 600px; margin: 0 auto 10px;">
+                Выберите действие, чтобы связаться с нами
+            </p>
+            <p style="color: #888; font-size: 0.9em; margin-bottom: 25px;">
+                <span class="online-dot"></span> Онлайн-поддержка доступна
+            </p>
+            <div class="bot-buttons">
+                <a href="https://t.me/Dieformettall" target="_blank" class="bot-btn btn-apply">
+                    ✍️ Подать заявку в команду
+                </a>
+                <button onclick="showDonate()" class="bot-btn btn-donate">
+                    💖 Поддержать студию
+                </button>
+            </div>
+        </section>
+
+        <!-- Модальное окно для доната -->
+        <div id="donateModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeDonate()">&times;</span>
+                <h2 style="color: #4CAF50;">💝 Поддержать студию</h2>
+                <p style="margin: 20px 0; color: #bbb; line-height: 1.6;">
+                    Ваша поддержка помогает нам создавать качественный контент и развиваться. 
+                    Спасибо за доверие!
+                </p>
+                <div class="card-info">
+                    <p style="margin-bottom: 15px; color: #aaa;">Номер банковской карты:</p>
+                    <div class="card-number">2202 2053 5541 6477</div>
+                    <button onclick="copyCardNumber()" class="copy-btn">
+                        📋 Скопировать номер
+                    </button>
+                    <p id="copySuccess" style="color: #4CAF50; margin-top: 10px; display: none;">
+                        ✓ Номер скопирован!
+                    </p>
+                </div>
+                <p style="color: #888; font-size: 0.9em; text-align: center; margin-top: 20px;">
+                    Любая сумма важна для нас ❤️
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 Aniframe Studio. Все права защищены.<br>
+        Контакты: <a href="https://t.me/Dieformettall" target="_blank" style="color: #4a6fa5; text-decoration: none;">@Dieformettall</a>
+    </footer>
+
+    <!-- Уведомление -->
+    <div id="notification" class="notification hidden"></div>
+
+    <script>
+        // Все работники студии (полный список)
+        const workers = {
+            'Владельцы и Администраторы': [
+                'GoToSata (владелец/администратор/редактор)',
+                'werxie (актриса озвучки/администратор)',
+                'Zynx (владелец/SMM-менеджер)'
+            ],
+            'Актеры озвучки': [
+                'Кесе',
+                'mallive',
+                'Astreal',
+                'Мелатонин',
+                'Dragnil',
+                'Yamori ko',
+                'Apozdun',
+                'Warxon'
+            ],
+            'Актрисы озвучки': [
+                'nmixx',
+                'werxie (и администратор)',
+                'Ангел',
+                'Зайка',
+                'Луна',
+                'Сунао',
+                'Рокси',
+                'Leima',
+                'Fallen',
+                'Elis',
+                'Maple',
+                'Мятный конфетамин'
+            ],
+            'Переводчики': [
+                'Lelouch (переводчик с английского)',
+                'Эми',
+                'Лелуш',
+                'Eleo'
+            ],
+            'Редакторы и Монтаж': [
+                'Неро (редактор перевода)',
+                'Yuri Ryūguji (монтажер)',
+                'GoToSata (редактор)'
+            ]
+        };
+
+        // Работы студии - только "Монолог фармацевта"
+        let works = JSON.parse(localStorage.getItem('aniframe_works')) || [
+            { 
+                id: 1, 
+                title: 'Монолог фармацевта', 
+                file: 'monolog_farmacevta.mp4', 
+                author: 'Кесе',
+                date: '2024-01-20',
+                size: '850 MB',
+                description: 'Драматический монолог из сериала "Аптекарь"'
+            }
+        ];
+
+        let isAdmin = localStorage.getItem('aniframe_admin') === 'true';
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            renderWorks();
+            renderWorkerGroups();
+            checkAdminStatus();
+            
+            // Проверка автологина
+            if (isAdmin) {
+                document.getElementById('adminControls').style.display = 'block';
+                showNotification('Вы вошли как администратор', 'success');
+            }
+            
+            // Сохранение работ в localStorage
+            localStorage.setItem('aniframe_works', JSON.stringify(works));
+        });
+
+        // Отображение работ
+        function renderWorks() {
+            const worksList = document.getElementById('works-list');
+            const adminList = document.getElementById('admin-works-list');
+            
+            worksList.innerHTML = '';
+            adminList.innerHTML = '';
+            
+            if (works.length === 0) {
+                worksList.innerHTML = '<p style="color: #888; text-align: center; padding: 30px;">Пока нет загруженных работ</p>';
+                adminList.innerHTML = '<p style="color: #888; text-align: center; padding: 30px;">Нет работ для управления</p>';
+                return;
+            }
+            
+            works.forEach(work => {
+                // Для обычных пользователей
+                const workElement = document.createElement('div');
+                workElement.className = 'work-item';
+                workElement.innerHTML = `
+                    <h3>${work.title}</h3>
+                    <p><strong>Исполнитель:</strong> ${work.author}</p>
+                    <p><strong>Файл:</strong> ${work.file}</p>
+                    <p><strong>Дата записи:</strong> ${work.date}</p>
+                    <p><strong>Размер:</strong> ${work.size || 'Не указан'}</p>
+                    ${work.description ? `<p><strong>Описание:</strong> ${work.description}</p>` : ''}
+                `;
+                worksList.appendChild(workElement);
+                
+                // Для администратора
+                if (isAdmin) {
+                    const adminWorkElement = document.createElement('div');
+                    adminWorkElement.className = 'work-item';
+                    adminWorkElement.innerHTML = `
+                        <h3>${work.title}</h3>
+                        <p><strong>Исполнитель:</strong> ${work.author}</p>
+                        <p><strong>Файл:</strong> ${work.file}</p>
+                        <p><strong>Дата записи:</strong> ${work.date}</p>
+                        <p><strong>Размер:</strong> ${work.size || 'Не указан'}</p>
+                        ${work.description ? `<p><strong>Описание:</strong> ${work.description}</p>` : ''}
+                        <button onclick="deleteWork(${work.id})" class="btn" style="background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%); margin-top: 15px; width: 100%;">
+                            🗑️ Удалить работу
+                        </button>
+                    `;
+                    adminList.appendChild(adminWorkElement);
+                }
+            });
+        }
+
+        // Отображение групп работников
+        function renderWorkerGroups() {
+            const container = document.querySelector('.groups-container');
+            container.innerHTML = '';
+            
+            for (const [groupName, members] of Object.entries(workers)) {
+                const groupElement = document.createElement('div');
+                groupElement.className = 'group';
+                groupElement.innerHTML = `
+                    <h3>${groupName} (${members.length})</h3>
+                    <ul class="worker-list">
+                        ${members.map(member => `<li>${member}</li>`).join('')}
+                    </ul>
+                `;
+                container.appendChild(groupElement);
+            }
+        }
+
+        // Загрузка новой работы
+        function uploadWork(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('workTitle').value.trim();
+            const fileInput = document.getElementById('workFile');
+            const file = fileInput.files[0];
+            
+            if (!title) {
+                showNotification('Введите название работы', 'error');
+                return;
+            }
+            
+            if (!file) {
+                showNotification('Выберите файл для загрузки', 'error');
+                return;
+            }
+            
+            // Показать лоадер
+            document.getElementById('uploadText').style.display = 'none';
+            document.getElementById('uploadLoader').classList.remove('hidden');
+            
+            // Имитация загрузки
+            setTimeout(() => {
+                const newWork = {
+                    id: works.length > 0 ? Math.max(...works.map(w => w.id)) + 1 : 1,
+                    title: title,
+                    file: file.name,
+                    author: isAdmin ? 'Администратор' : 'Пользователь',
+                    date: new Date().toISOString().split('T')[0],
+                    size: formatFileSize(file.size)
+                };
+                
+                works.push(newWork);
+                renderWorks();
+                saveWorksToStorage();
+                
+                // Очистка формы
+                document.getElementById('workTitle').value = '';
+                fileInput.value = '';
+                
+                // Скрыть лоадер
+                document.getElementById('uploadText').style.display = 'inline';
+                document.getElementById('uploadLoader').classList.add('hidden');
+                
+                showNotification('Работа успешно загружена!', 'success');
+            }, 1500);
+        }
+
+        // Удаление работы
+        function deleteWork(id) {
+            if (!isAdmin) {
+                showNotification('Только администратор может удалять работы', 'error');
+                return;
+            }
+            
+            if (confirm('Вы уверены, что хотите удалить эту работу?\nЭто действие нельзя отменить.')) {
+                works = works.filter(work => work.id !== id);
+                renderWorks();
+                saveWorksToStorage();
+                showNotification('Работа удалена', 'success');
+            }
+        }
+
+        // Форматирование размера файла
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Сохранение работ в localStorage
+        function saveWorksToStorage() {
+            localStorage.setItem('aniframe_works', JSON.stringify(works));
+        }
+
+        // Переключение формы логина
+        function toggleAdmin() {
+            const loginForm = document.getElementById('loginForm');
+            loginForm.classList.toggle('hidden');
+            
+            if (!loginForm.classList.contains('hidden')) {
+                document.getElementById('adminLogin').focus();
+            }
+        }
+
+        // Вход администратора
+        function adminLogin() {
+            const login = document.getElementById('adminLogin').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            
+            // Показать лоадер
+            document.getElementById('loginText').style.display = 'none';
+            document.getElementById('loginLoader').classList.remove('hidden');
+            
+            // Имитация проверки
+            setTimeout(() => {
+                if (login === 'Pinkamina' && password === '22102020') {
+                    isAdmin = true;
+                    localStorage.setItem('aniframe_admin', 'true');
+                    document.getElementById('adminControls').style.display = 'block';
+                    document.getElementById('loginForm').classList.add('hidden');
+                    renderWorks();
+                    
+                    // Добавить кнопку выхода
+                    addLogoutButton();
+                    
+                    showNotification('Добро пожаловать, администратор Pinkamina!', 'success');
+                } else {
+                    showNotification('Неверный логин или пароль', 'error');
+                }
+                
+                // Скрыть лоадер
+                document.getElementById('loginText').style.display = 'inline';
+                document.getElementById('loginLoader').classList.add('hidden');
+                
+                // Очистить поля
+                document.getElementById('adminLogin').value = '';
+                document.getElementById('adminPassword').value = '';
+            }, 1000);
+        }
+
+        // Проверка статуса администратора
+        function checkAdminStatus() {
+            if (isAdmin) {
+                document.getElementById('adminControls').style.display = 'block';
+                addLogoutButton();
+            }
+        }
+
+        // Добавить кнопку выхода
+        function addLogoutButton() {
+            const adminControls = document.getElementById('adminControls');
+            const existingLogoutBtn = document.querySelector('.logout-btn');
+            
+            if (!existingLogoutBtn) {
+                const logoutBtn = document.createElement('button');
+                logoutBtn.className = 'btn logout-btn';
+                logoutBtn.style.background = 'linear-gradient(135deg, #666 0%, #555 100%)';
+                logoutBtn.style.marginTop = '15px';
+                logoutBtn.style.width = '100%';
+                logoutBtn.innerHTML = '🚪 Выйти из системы';
+                logoutBtn.onclick = adminLogout;
+                adminControls.appendChild(logoutBtn);
+            }
+        }
+
+        // Выход администратора
+        function adminLogout() {
+            isAdmin = false;
+            localStorage.removeItem('aniframe_admin');
+            document.getElementById('adminControls').style.display = 'none';
+            renderWorks();
+            showNotification('Вы вышли из системы', 'info');
+        }
+
+        // Показать модальное окно доната
+        function showDonate() {
+            document.getElementById('donateModal').style.display = 'flex';
+            document.getElementById('copySuccess').style.display = 'none';
+        }
+
+        // Закрыть модальное окно
+        function closeDonate() {
+            document.getElementById('donateModal').style.display = 'none';
+        }
+
+        // Копирование номера карты
+        function copyCardNumber() {
+            const cardNumber = '2202 2053 5541 6477';
+            navigator.clipboard.writeText(cardNumber.replace(/\s/g, '')).then(() => {
+                const copySuccess = document.getElementById('copySuccess');
+                copySuccess.style.display = 'block';
+                setTimeout(() => {
+                    copySuccess.style.display = 'none';
+                }, 3000);
+                showNotification('Номер карты скопирован в буфер обмена', 'success');
+            });
+        }
+
+        // Показать уведомление
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.remove('hidden');
+            
+            // Цвет в зависимости от типа
+            const colors = {
+                success: '#4CAF50',
+                error: '#f44336',
+                info: '#2196F3'
+            };
+            notification.style.borderLeftColor = colors[type] || colors.info;
+            
+            // Автоматическое скрытие
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Закрытие модального окна по клику вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('donateModal');
+            if (event.target === modal) {
+                closeDonate();
+            }
+        }
+
+        // Добавление обработчика Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeDonate();
+            }
+        });
+    </script>
+</body>
+</html>
